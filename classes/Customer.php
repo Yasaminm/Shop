@@ -10,10 +10,10 @@ class Customer {
     private $firstname;
     private $lastname;
     private $cid;
-    private $addressid;
+    private $aid;
 
 
-    public static $amount = 0;
+    private static $amount = 0;
 
 
     public function __construct($fn, $ln) {
@@ -24,7 +24,16 @@ class Customer {
         self::$amount++;
         
     }
+    
+    public static function find($findname) {
+        //select from table
+    }
+    
+    public static function getAmount() {
+        return self::$amount;
+    }
     private function addCustomer() {
+        //insert into table
 //        return lastid();
     }
     public function addAdress($s, $z, $c, $country) {
@@ -46,7 +55,7 @@ class Customer {
         }
         $name = filter_var($ln, FILTER_SANITIZE_STRING);
         if(is_string($name)){
-        $this->lastname = $ln;
+        $this->lastname = $name;
         }
     }
     public function firstName($fn = NULL) {
@@ -55,17 +64,26 @@ class Customer {
         }
         $name = filter_var($fn, FILTER_SANITIZE_STRING);
         if(is_string($name)){
-        $this->lastname = $fn;
+        $this->lastname = $name;
         }
     }
     
 }
 
 
-$c1 = new Customer('yasamin',' mustamandi');
-$c2 = new Customer('yasamin',' mustamandi');
-//$c1->lastName('Braune');
-//echo $c1->firstName();
-//echo $c1->lastName();
-echo '<br>Anzahl angelegter Kunden: '. $c1::$amount;
-echo '<br>Anzahl angelegter Kunden: '. Customer::$amount;
+//$c1 = new Customer('yasamin',' mustamandi');
+//$c2 = new Customer('samie',' danish');
+////echo Customer::$amount;
+//echo Customer::getAmount();
+////$c1->lastName('Braune');
+////echo $c1->firstName();
+////echo $c1->lastName();
+//echo '<br>Anzahl angelegter Kunden: '. $c1::$amount;
+//echo '<br>Anzahl angelegter Kunden: '. Customer::$amount;
+//$c = Customer::find('Yasamin');
+////////////////////////////////
+//$c = [];
+//$c[] = new Customer('yasamin', 'mustamandi');
+//$c[] = new Customer('samie', 'danish');
+//echo count($c);
+//echo '<br>' .$c[0]->lastName();
