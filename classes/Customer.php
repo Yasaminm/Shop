@@ -66,7 +66,7 @@ class Customer {
         }
         $name = filter_var($fn, FILTER_SANITIZE_STRING);
         if(is_string($name)){
-        $this->lastname = $name;
+        $this->firstname = $name;
         }
     }
       public function address($adr = NULL) {
@@ -75,8 +75,19 @@ class Customer {
         }
         if(is_object($adr)){
             
-        $this->address = $adr;// $adr is an object from Address class, inside is the (street, zip and city).
+        $this->address = clone($adr);// $adr is an object from Address class, inside is the (street, zip and city).
         }
+    }
+    
+    public function formatedAddress() {
+        return sprintf("%s %s\n%s\n%s %s",
+        $this->firstname(),
+        $this->lastname(),
+        $this->address->street(),
+        $this->address->zip(),
+        $this->address->city()
+         
+        );
     }
     
 }

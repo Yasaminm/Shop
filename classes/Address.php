@@ -46,6 +46,10 @@ class Address {
         $this->city = $cty;
         }
     }
+    
+    public function addressLine() {
+        return $this->street(). ';' .$this->zip(). ';' .$this->city();
+    }
 }
 //
 //$ad = new Address('Cauerstr 1', '10587', 'Berlin');

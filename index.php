@@ -6,8 +6,11 @@ require_once './classes/Address.php';
 
 $adr = new Address('Cauerstr 1', '10587', 'Berlin');
 $c = new Customer('yasamin',' mustamandi', $adr);
+//var_dump($c->address());//$adr is an object from Address class in Customer class so it is shown by var_dump.
+//$adrc = $c->address();
+//echo $adrc->street();
+echo nl2br($c->formatedAddress());
 
-var_dump($c->address());
 ?>
 
 <!DOCTYPE html>
