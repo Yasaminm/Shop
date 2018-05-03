@@ -9,6 +9,7 @@ class Customer {
     
     private $firstname;
     private $lastname;
+    private $address;
     private $cid;
     private $aid;
 
@@ -16,12 +17,13 @@ class Customer {
     private static $amount = 0;
 
 
-    public function __construct($fn, $ln) {
+    public function __construct($fn, $ln, Address $address) {
         
-        $this->firstname = filter_var($fn, FILTER_SANITIZE_STRING);
-        $this->lastname = filter_var($ln, FILTER_SANITIZE_STRING);
-        $this->cid = $this->addCustomer($this->firstname, $this->lastname);
-        self::$amount++;
+        $this->firstname($fn);
+        $this->lastname($ln);
+        $this->address($address);
+//        $this->cid = $this->addCustomer($this->firstname, $this->lastname);
+//        self::$amount++;
         
     }
     
@@ -49,7 +51,7 @@ class Customer {
 //    }
     ////////////////////////////////////////
     
-    public function lastName($ln = NULL) {
+    public function lastname($ln = NULL) {
         if($ln === NULL){
             return $this->lastname;
         }
@@ -58,13 +60,22 @@ class Customer {
         $this->lastname = $name;
         }
     }
-    public function firstName($fn = NULL) {
+    public function firstname($fn = NULL) {
         if($fn === NULL){
             return $this->firstname;
         }
         $name = filter_var($fn, FILTER_SANITIZE_STRING);
         if(is_string($name)){
         $this->lastname = $name;
+        }
+    }
+      public function address($adr = NULL) {
+        if($adr === NULL){
+            return $this->address;
+        }
+        if(is_object($adr)){
+            
+        $this->address = $adr;// $adr is an object from Address class, inside is the (street, zip and city).
         }
     }
     

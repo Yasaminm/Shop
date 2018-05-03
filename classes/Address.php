@@ -10,10 +10,11 @@ class Address {
     private $zip;
     private $city;
     
-    public function __construct($street, $zip, $city) {
-        $this->street = filter_var($street, FILTER_SANITIZE_STRING);
-         $this->zip = filter_var($zip, FILTER_SANITIZE_STRING);
-         $this->city = filter_var($city, FILTER_SANITIZE_STRING);
+    public function __construct(string $street, string $zip, string $city) {
+        
+        $this->street($street);
+        $this->zip($zip);
+        $this->city($city);
     }
     
     public function street($street = NULL) {
