@@ -1,16 +1,28 @@
 <?php
+require_once './config.php';
+require_once './classes/DbClass.php';
+require_once './classes/DbClassExt.php';
 require_once './classes/Customer.php';
 require_once './classes/Address.php';
 
 
+try {   //DB connection:
+            $db = new DbClassExt('mysql:host=' . HOST . ';dbname=' . DB, USER, PASSWORD);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $exc) {
+                echo $exc->getCode();
+            }
+
 
 $adr = new Address('Cauerstr 1', '10587', 'Berlin');
-$c = new Customer('yasamin',' mustamandi', $adr);
+$c = new Customer('yasamin','mustamandi', $adr);
+$c->insert($db);
 //var_dump($c->address());//$adr is an object from Address class in Customer class so it is shown by var_dump.
 //$adrc = $c->address();
 //echo $adrc->street();
-echo nl2br($c->formatedAddress());
-
+//echo nl2br($c->formatedAddress());
+$customerData = Customer::find($db, ' mustamandi');
+var_dump($customerData);
 ?>
 
 <!DOCTYPE html>

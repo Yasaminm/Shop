@@ -12,6 +12,8 @@ class Customer {
     private $address;
     private $cid;
     private $aid;
+    private $db;
+    private $lastId;
 
 
     private static $amount = 0;
@@ -27,20 +29,45 @@ class Customer {
         
     }
     
-    public static function find($findname) {
+    public function insert(DbClassExt $db) {
+        $this->db = $db;
+       $cid = $this->addCustomer();
+       $this->addAdress($cid);
+    }
+    
+    private function addCustomer() {
+        $this->db->setTable('tb_customers');
+        $data = [];
+        $data['firstname'] = $this->firstname();
+        $data['lastname'] = $this->lastname();
+        return $this->db->insert($data);
+        
+        //insert into table
+//        return lastid();
+    }
+    public function addAdress(int $cid) {
+        $this->db->setTable('tb_addresses');
+        $data = [];
+        $data['cid'] = $cid;
+        $data['street'] = $this->address->street();
+        $data['zip'] = $this->address->zip();
+        $data['city'] = $this->address->city();
+        return $this->db->insert($data);
+        //$this->id;
+    }
+    public static function find(DbClassExt $db, $findname) {
         //select from table
+        $db->setTable('tb_customers');
+        $findname = trim($findname);
+        $db->setWhere("lastname='$findname' OR firstname='$findname'");
+        return $db->getData();
     }
     
     public static function getAmount() {
         return self::$amount;
     }
-    private function addCustomer() {
-        //insert into table
-//        return lastid();
-    }
-    public function addAdress($s, $z, $c, $country) {
-        //$this->id;
-    }
+    
+    
     ////////////////////////////////////////
 //    public function setLastName($ln) {
 //        $this->lastname = $ln;

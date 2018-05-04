@@ -2,7 +2,7 @@
 
 class DbClass extends PDO {
 
- private $tableName = '';
+ protected $tableName = '';
 
  public function setTable($tn) {
   $this->tableName = $tn;
