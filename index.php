@@ -8,6 +8,8 @@ require_once './classes/Product.php';
 require_once './classes/Labels.php';
 
 
+//
+
 try {   //DB connection:
             $db = new DbClassExt('mysql:host=' . HOST . ';dbname=' . DB, USER, PASSWORD);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -15,6 +17,11 @@ try {   //DB connection:
                 echo $exc->getCode();
             }
 
+            $labels = filter_input(INPUT_POST, 'labelname', FILTER_SANITIZE_STRING);
+            $pname = filter_input(INPUT_POST, 'pname', FILTER_SANITIZE_STRING);
+            $pnr = filter_input(INPUT_POST, 'pnr', FILTER_SANITIZE_STRING);
+            $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_INT);
+            
 //////////////////////Customer and Address////////////////////////
 //$adr = new Address('Cauerstr 1', '10587', 'Berlin');
 //$c = new Customer('yasamin','mustamandi', $adr);
@@ -25,16 +32,18 @@ try {   //DB connection:
 ////echo nl2br($c->formatedAddress());
 //$customerData = Customer::find($db, '    mustamandi');
 //var_dump($customerData);
-/////////////////////////////////////////////
+////////////////////////Product and Labels/////////////////////
             //
-//var_dump($label);
-  $label = new Labels('MAC');       
-  $prd = new Product('Party Kleid', '892SFE', 450, $label);
-//  var_dump($prd->label());
-//var_dump($label);
-  $prd->insert($db);
-  $found = $prd->find($db, 'Party Kleid');
-  var_dump($found);
+////var_dump($label);
+//  $label = new Labels('MAC');       
+//  $prd = new Product('Party Kleid', '892SFE', 450, $label);
+////  var_dump($prd->label());
+////var_dump($label);
+//  $prd->insert($db);
+//  $found = $prd->find($db, 'Party Kleid');
+//  var_dump($found);
+  ////////////////////////////////////////////////////////////////
+//}
 ?>
 
 <!DOCTYPE html>
@@ -58,27 +67,53 @@ try {   //DB connection:
           <h3>Please fill your name and family name:</h3>
           <hr>
           <label>First Name: 
-              <input class="form-control" required type="text" name="fname">
+              <input class="form-control"  type="text" name="fname">
           </label>
           <label>Last Name: 
-              <input class="form-control" required type="text" name="lname">
+              <input class="form-control"  type="text" name="lname">
           </label>
           <hr>
           <h3>Please fill the address:</h3>
           <hr>    
           <label>Street: 
-              <input class="form-control" required type="text" name="address">
+              <input class="form-control"  type="text" name="address">
           </label>
           <label>Zip: 
-              <input class="form-control" required type="text" name="zip">
+              <input class="form-control"  type="text" name="zip">
           </label>
           <label>City: 
-              <input class="form-control" required type="text" name="city">
+              <input class="form-control"  type="text" name="city">
           </label>
           <hr>
-                <button class="btn btn-outline-primary" type='submit' name='submit'>Sign Up</button>
+          <h3>Please add a Product:</h3>
+          <hr>    
+           <label>Label name: 
+              <input class="form-control" required type="text" name="labelname">
+          </label>
+          <label>Product name: 
+              <input class="form-control" required type="text" name="pname">
+          </label>
+          <label>Product Nr: 
+              <input class="form-control" required type="text" name="pnr">
+          </label>
+          <label>Price: 
+              <input class="form-control" required type="text" name="price">
+          </label>
+                <button class="btn btn-outline-primary" type='submit' name='submit'>Insert</button>
             </form>
       
   </div>
+     <?php
+//     if($_POST('submit')){
+     //var_dump($label);
+  $label = new Labels($labels);       
+  $prd = new Product($pname, $pnr, $price, $label);
+//  var_dump($prd->label());
+//var_dump($label);
+  $prd->insert($db);
+//  $found = $prd->find($db, 'Party Kleid');
+//  var_dump($found);
+//     }
+     ?>
  </body>
 </html>
