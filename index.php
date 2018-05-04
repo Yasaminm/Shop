@@ -4,6 +4,8 @@ require_once './classes/DbClass.php';
 require_once './classes/DbClassExt.php';
 require_once './classes/Customer.php';
 require_once './classes/Address.php';
+require_once './classes/Product.php';
+require_once './classes/Labels.php';
 
 
 try {   //DB connection:
@@ -13,16 +15,26 @@ try {   //DB connection:
                 echo $exc->getCode();
             }
 
-
-$adr = new Address('Cauerstr 1', '10587', 'Berlin');
-$c = new Customer('yasamin','mustamandi', $adr);
-$c->insert($db);
-//var_dump($c->address());//$adr is an object from Address class in Customer class so it is shown by var_dump.
-//$adrc = $c->address();
-//echo $adrc->street();
-//echo nl2br($c->formatedAddress());
-$customerData = Customer::find($db, ' mustamandi');
-var_dump($customerData);
+//////////////////////Customer and Address////////////////////////
+//$adr = new Address('Cauerstr 1', '10587', 'Berlin');
+//$c = new Customer('yasamin','mustamandi', $adr);
+//$c->insert($db);
+////var_dump($c->address());//$adr is an object from Address class in Customer class so it is shown by var_dump.
+////$adrc = $c->address();
+////echo $adrc->street();
+////echo nl2br($c->formatedAddress());
+//$customerData = Customer::find($db, '    mustamandi');
+//var_dump($customerData);
+/////////////////////////////////////////////
+            //
+//var_dump($label);
+  $label = new Labels('MAC');       
+  $prd = new Product('Party Kleid', '892SFE', 450, $label);
+//  var_dump($prd->label());
+//var_dump($label);
+  $prd->insert($db);
+  $found = $prd->find($db, 'Party Kleid');
+  var_dump($found);
 ?>
 
 <!DOCTYPE html>

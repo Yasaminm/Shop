@@ -55,10 +55,10 @@ class Customer {
         return $this->db->insert($data);
         //$this->id;
     }
-    public static function find(DbClassExt $db, $findname) {
+    public static function find(DbClassExt $db, $param) {
         //select from table
         $db->setTable('tb_customers');
-        $findname = trim($findname);
+        $findname = trim($param); //trim method clears unwanted space inside the variable.
         $db->setWhere("lastname='$findname' OR firstname='$findname'");
         return $db->getData();
     }
