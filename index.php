@@ -17,6 +17,13 @@ try {   //DB connection:
                 echo $exc->getCode();
             }
 
+            $fname = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_STRING);
+            $lname = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
+            
+            $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+            $zip = filter_input(INPUT_POST, 'zip', FILTER_VALIDATE_INT);
+            $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+            
             $labels = filter_input(INPUT_POST, 'labelname', FILTER_SANITIZE_STRING);
             $pname = filter_input(INPUT_POST, 'pname', FILTER_SANITIZE_STRING);
             $pnr = filter_input(INPUT_POST, 'pnr', FILTER_SANITIZE_STRING);
@@ -50,7 +57,7 @@ try {   //DB connection:
 <html>
  <head>
   <meta charset="UTF-8">
-  <title>PHP 21 Ajax Muster</title>
+  <title>PHP 23 OOP PHP</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" href="assets/css/styles.css">    
@@ -104,16 +111,16 @@ try {   //DB connection:
       
   </div>
      <?php
-//     if($_POST('submit')){
-     //var_dump($label);
+     if(isset($_POST['submit'])){
+   $adr = new Address($address, $zip, $city);
+   $c = new Customer($fname, $lname, $adr);
+   $c->insert($db);
   $label = new Labels($labels);       
   $prd = new Product($pname, $pnr, $price, $label);
-//  var_dump($prd->label());
-//var_dump($label);
   $prd->insert($db);
 //  $found = $prd->find($db, 'Party Kleid');
 //  var_dump($found);
-//     }
+     }
      ?>
  </body>
 </html>

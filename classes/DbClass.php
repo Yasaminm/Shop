@@ -3,8 +3,13 @@
 class DbClass extends PDO {
 
  protected $tableName = '';
-
- public function setTable($tn) {
+/**
+ * tb_customers
+ * or
+ * tb_customers AS C //alias for joining tables.
+ * @param string $tn
+ */
+ public function setTable(string $tn) {
   $this->tableName = $tn;
  }
 

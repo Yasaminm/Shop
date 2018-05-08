@@ -7,6 +7,19 @@ class DbClassExt extends DbClass {
  private $orderby = '';
  private $where = '';
  private $groupby = '';
+ private $join = [];
+ 
+ const INNER = 'INNER';
+ const LEFT = 'LEFT';
+ const RIGHT = 'RIGHT';
+
+ 
+
+
+
+ public function setJoin(string $tn, string $type, string $col1, string $col2) {
+     $this->join[] = sprintf("%s JOIN %s ON %s=%s", $type, $tn, $col1, $col2);
+ }
 
  public function setGroupBy(string $param) {
      $this->groupby = $param;
@@ -33,6 +46,10 @@ class DbClassExt extends DbClass {
   $this->statement = $st;
  }
 
+ /**
+  * 
+  * @param string $cols
+  */
  public function setColumns(string $cols) {
   $this->columns = $cols;
  }
@@ -56,8 +73,10 @@ class DbClassExt extends DbClass {
   
   $g = ($this->groupby !== '')? $g = ' GROUP BY ' . $this->groupby : '';
   
-  $query = sprintf("SELECT %s %s FROM %s %s %s %s", 
-          $this->statement, $this->columns, $this->tableName, $w, $g, $o);
+  $j = (count($this->join)>0)? implode(' ', $this->join) : '';
+  
+  $query = sprintf("SELECT %s %s FROM %s %s %s %s %s", 
+          $this->statement, $this->columns, $this->tableName, $j, $w, $g, $o);
   $stmt = $this->query($query);
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
  }
